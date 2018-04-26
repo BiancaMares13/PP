@@ -11,16 +11,30 @@ public class Main {
         BigInteger numerator;
         BigInteger denominator;
         List<BigInteger> wolstenholmePrimes=new ArrayList<BigInteger>();
-        for (int i = 1; i < 4000000; i += 2) {
+        int lastDigit;
+        int productOfDigits;
+        for (int i = 3; i < 2200000; i += 2) {
             ok = true;
             numerator =BigInteger.ONE;
             denominator =BigInteger.ONE;
+            lastDigit=i%10;
+            productOfDigits=calcProduct(new Integer(i));
+            if(lastDigit %5 ==0) {
+                continue;
+            }
+
+            if(productOfDigits%3==0){
+                continue;
+
+            }
+
             for (int d = 2; d <= Math.sqrt(i); d++) {
                 if (i % d == 0) {
                     ok = false;
                 }
             }
             if (ok) {
+
                 BigInteger numeratorPrev;
                 BigInteger prime=BigInteger.valueOf(i);
 
@@ -47,6 +61,15 @@ public class Main {
 
             System.out.println(wolstenholmePrimes.get(k));
         }
+    }
+    public static int calcProduct(Integer num)
+    {
+        int length = num.toString().length();
+        if (length == 1)
+        {
+            return num;
+        }
+        return (num % 10) + calcProduct(num / 10);
     }
 
 }
